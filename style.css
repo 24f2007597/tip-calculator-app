@@ -35,9 +35,34 @@ body {
     color: #00474b;
 }
 
+/* Tip Selection Grid */
+.tip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .tip-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 .tip-btn {
     font-size: 1.2rem;
     font-weight: bold;
+}
+
+#custom-tip-input {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center; /* Center placeholder */
+    padding: .375rem .75rem;
+}
+
+#custom-tip-input::placeholder {
+    color: #5e7a7d; /* Match label color for placeholder */
+    text-align: center;
 }
 
 /* Custom active state for tip buttons */
@@ -83,3 +108,4 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+

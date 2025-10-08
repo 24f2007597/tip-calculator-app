@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element Selection ---
     const billAmountInput = document.getElementById('bill-amount');
     const tipButtons = document.querySelectorAll('.tip-btn');
+    const customTipInput = document.getElementById('custom-tip-input'); // Added custom tip input
     const numberOfPeopleInput = document.getElementById('number-of-people');
     const tipAmountDisplay = document.getElementById('tip-amount-per-person');
     const totalAmountDisplay = document.getElementById('total-amount-per-person');
@@ -18,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * Calculates the tip and total amount per person and updates the UI.
      */
     function calculateAndDisplay() {
-        // Prevent division by zero
-        if (numberOfPeople < 1) {
+        // Prevent division by zero or invalid inputs
+        if (numberOfPeople < 1 || billAmount < 0) {
             return;
         }
 
@@ -31,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalBill = billAmount + tipTotal;
         const totalPerPerson = totalBill / numberOfPeople;
 
-        // Update the UI with formatted currency values
-        tipAmountDisplay.textContent = `$${tipPerPerson.toFixed(2)}`;
-        totalAmountDisplay.textContent = `$${totalPerPerson.toFixed(2)}`;
+        // Update the UI with formatted currency values (INR)
+        tipAmountDisplay.textContent = `₹${tipPerPerson.toFixed(2)}`;
+        totalAmountDisplay.textContent = `₹${totalPerPerson.toFixed(2)}`;
     }
 
     /**
@@ -41,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {Event} event - The click event from the button.
      */
     function handleTipSelection(event) {
+        // Clear custom tip input when a preset button is clicked
+        customTipInput.value = '';
+
         // Remove 'active' class from all tip buttons
         tipButtons.forEach(btn => btn.classList.remove('active'));
         
@@ -60,13 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
         billAmountInput.value = '';
         numberOfPeopleInput.value = '1';
         tipButtons.forEach(btn => btn.classList.remove('active'));
+        customTipInput.value = ''; // Clear custom tip input
 
         billAmount = 0.0;
         tipPercentage = 0;
         numberOfPeople = 1;
 
-        tipAmountDisplay.textContent = '$0.00';
-        totalAmountDisplay.textContent = '$0.00';
+        tipAmountDisplay.textContent = '₹0.00';
+        totalAmountDisplay.textContent = '₹0.00';
     }
 
     // --- Event Listeners ---
@@ -91,6 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add click listeners to all tip buttons
     tipButtons.forEach(button => {
         button.addEventListener('click', handleTipSelection);
+    });
+
+    // Listen for input on the custom tip field
+    customTipInput.addEventListener('input', (event) => {
+        // Remove 'active' class from all preset tip buttons
+        tipButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Update state and recalculate
+        tipPercentage = parseFloat(event.target.value) || 0;
+        calculateAndDisplay();
     });
 
     // Listen for clicks on the reset button

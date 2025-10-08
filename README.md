@@ -1,11 +1,11 @@
 # Tip Calculator
 
-A simple, single-page web application to calculate tips and split the bill among a number of people.
+A simple, single-page web application to calculate tips in Indian Rupees (₹) and split the bill among a number of people.
 
 ## How It Works
 
-1.  **Enter Bill Amount**: Input the total amount from your bill.
-2.  **Select Tip %**: Click one of the buttons to select a tip percentage (10%, 15%, or 20%).
+1.  **Enter Bill Amount**: Input the total amount from your bill in INR (₹).
+2.  **Select Tip %**: Click one of the preset buttons (10%, 15%, or 20%) or enter a custom percentage in the "Custom" input field.
 3.  **Number of People**: Enter the number of people who are splitting the bill.
 
 The application will instantly calculate and display the tip amount per person and the total amount per person.
